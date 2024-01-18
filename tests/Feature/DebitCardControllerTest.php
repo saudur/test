@@ -23,6 +23,19 @@ class DebitCardControllerTest extends TestCase
     public function testCustomerCanSeeAListOfDebitCards()
     {
         // get /debit-cards
+
+        // $response = $this->actingAs($this->user)->get('/debit-cards');    
+        // $response->assertStatus(200); 
+
+        // $user = factory(User::class)->create();
+        // $debitCard = factory(DebitCard::class)->create(['user_id' => $user->id]);
+        // $transaction = factory(DebitCardTransaction::class)->create(['debit_card_id' => $debitCard->id]);
+
+        $response = $this->actingAs($user)
+            ->json('GET', '/debit-cards');
+
+        $response->assertStatus(200)
+            ->assertJsonFragment(['id' => $transaction->id]);
     }
 
     public function testCustomerCannotSeeAListOfDebitCardsOfOtherCustomers()
@@ -33,6 +46,7 @@ class DebitCardControllerTest extends TestCase
     public function testCustomerCanCreateADebitCard()
     {
         // post /debit-cards
+        $this->post('/debit-cards');
     }
 
     public function testCustomerCanSeeASingleDebitCardDetails()
